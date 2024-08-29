@@ -22,7 +22,7 @@ def main(page: ft.Page):
     page.scroll = ft.ScrollMode.AUTO
     page.bgcolor = ft.colors.BROWN_600
 
-    available_words = ['Python', 'Flet', 'Django', 'Dev', 'Programador', 'Rafael']
+    available_words = ['Python', 'Flet', 'Django', 'Dev', 'Programador', 'Rafael', 'Backend', 'Automacao', 'IA', 'Robozinho', 'Belinho']
     # available_words = ['Dev']
     choiced = random.choice(available_words).upper()
 
