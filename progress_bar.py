@@ -17,12 +17,12 @@ def main(page: ft.Page):
         bar_height=10
     )
 
+    page.add(pb1, pb2)
+
     for i in range(10):
         pb1.value += 0.1
         time.sleep(1)
         page.update()
-
-    page.add(pb1, pb2)
 
 if __name__ == '__main__':
     ft.app(target=main)
