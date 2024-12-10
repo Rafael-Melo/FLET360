@@ -5,7 +5,7 @@ a = Analysis(
     ['calculadora.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('venv/Lib/site-packages/flet_desktop', 'flet_desktop')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -35,5 +35,4 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    version='C:\\Users\\rmelo\\AppData\\Local\\Temp\\9f4da3b7-e7a7-4a76-b325-caa1502e6072',
 )
