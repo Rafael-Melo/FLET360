@@ -1,5 +1,6 @@
 import flet as ft
 from flet import colors
+from decimal import Decimal
 
 # Lista de botões da calculadora, com informações sobre operadores, cores de fonte e fundo.
 botoes = [
@@ -32,13 +33,44 @@ def main(page: ft.Page):
     page.window_height = 380
     page.window_always_on_top = True
 
-    result = ft.Text(value=0, color=ft.colors.WHITE)
+    result = ft.Text(value="0", color=ft.colors.WHITE)
+
+    def calculate(operador, value_at):
+        try:
+            value = Decimal(eval(value_at))
+
+            if operador == '%':
+                value /=100
+            elif operador == '±':
+                value = -value
+        except:
+            return 'Error'
+        
+        digits = min(abs(Decimal(value).as_tuple().exponent), 5)
+        return format(value, f'.{digits}f')
+
+    def select(e):
+        nonlocal result
+        value_at = result.value if result.value not in ('0', 'Error') else ''
+        value = e.control.content.value
+
+        if value.isdigit():
+            value = value_at + value
+        elif value == 'AC':
+            value = '0'
+        elif value in ('%', '±', '='):
+            value = calculate(operador=value, value_at=value_at)
+        else: 
+            if value_at and value_at[-1] in ('/', '*', '-', '+', '.'):
+                value_at = value_at[:-1]
+            value = value_at + value
+
+        result.value = value
+        result.update()
 
     display = ft.Row(
         width=250,
-        controls=[
-            result
-        ],
+        controls=[result],
         alignment='end',
     )
 
@@ -49,6 +81,7 @@ def main(page: ft.Page):
         bgcolor=btn['fundo'],
         border_radius=100,
         alignment=ft.alignment.center,
+        on_click=select
     ) for btn in botoes]
 
     keyboard = ft.Row(

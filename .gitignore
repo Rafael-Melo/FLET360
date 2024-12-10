@@ -1,3 +1,5 @@
 teste.py
 assets/
 venv/
+build/
+dist/
