@@ -2,6 +2,7 @@ import flet as ft
 from typing import Dict
 import datetime
 import locale
+import random
 
 locale.setlocale(locale.LC_ALL, 'pt_BR')
 
@@ -90,6 +91,8 @@ saved_notes = [
 ]
 
 def main(page: ft.Page):
+    page.bgcolor = ft.colors.BLACK
+    page.title = 'NoteX'
 
     def apply_shadow(e):
         if e.control.shadow:
@@ -153,6 +156,7 @@ def main(page: ft.Page):
         expand=True,
         padding=ft.padding.all(20),
         content=ft.Column(
+            spacing=50,
             controls=[
                 ft.Text(value='NoteX', style=ft.TextThemeStyle.DISPLAY_LARGE),
                 ft.Column(
@@ -186,6 +190,38 @@ def main(page: ft.Page):
         else:
             date = datetime.datetime.today().strftime('%b. %d, %Y')
 
+
+        def gerar_cor_hex():
+            """Gera uma cor hexadecimal aleatória no formato '#RRGGBB'."""
+            r = random.randint(0, 255)
+            g = random.randint(0, 255)
+            b = random.randint(0, 255)
+            return f"#{r:02X}{g:02X}{b:02X}"
+
+
+        def change_note(e):
+            if e.control.data != None:
+                for sn in saved_notes:
+                    if sn['id'] == e.control.data:
+                        sn['title'] = title.value
+                        sn['content'] = content.value
+                        sn['date'] = datetime.datetime.today()
+            else:
+                saved_notes.append({
+                    'id': saved_notes[-1]['id'] + 1,
+                    'title': title.value,
+                    'date': datetime.datetime.today(),
+                    'content': content.value,
+                    'color': gerar_cor_hex(),
+                    'expand': False,
+                })
+
+
+        def enable_save_button(e):
+            save_button.disabled = False
+            save_button.update()
+
+
         return ft.Container(
             expand=True,
             padding=ft.padding.all(20),
@@ -193,17 +229,18 @@ def main(page: ft.Page):
                 spacing=50,
                 controls=[
                     ft.IconButton(icon=ft.icons.ARROW_BACK, on_click=go_to_home),
-                    ft.TextField(
+                    title := ft.TextField(
                         value=note.get('title'),
                         max_length=50,
-                        text_style=ft.TextStyle(size=20, weight=ft.FontWeight.BOLD),
+                        text_style=ft.TextStyle(size=30, weight=ft.FontWeight.BOLD),
                         border=ft.InputBorder.UNDERLINE,
                         hint_text='Qual será o título da sua nota?',
                         hint_style=ft.TextStyle(italic=True),
                         content_padding=ft.padding.only(bottom=20),
+                        on_change=enable_save_button,
                     ),
                     ft.Text(value=date),
-                    ft.TextField(
+                    content := ft.TextField(
                         value=note.get('content'),
                         text_style=ft.TextStyle(size=20),
                         border=ft.InputBorder.NONE,
@@ -211,12 +248,13 @@ def main(page: ft.Page):
                         min_lines=5,
                         hint_text='Digite sua anotação aqui...',
                         hint_style=ft.TextStyle(italic=True),
+                        on_change=enable_save_button,
                     ),
-                    ft.ElevatedButton(
+                    save_button := ft.ElevatedButton(
                         text='Salvar alterações', 
                         disabled=True,
-                        # data=note.get('id'),
-                        # on_click=change_note
+                        data=note.get('id'),
+                        on_click=change_note
                     )
                 ]
                 
