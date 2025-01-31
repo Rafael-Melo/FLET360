@@ -26,7 +26,12 @@ def main(page: ft.Page):
         indicator_color=ft.colors.WHITE,
         indicator_shape=ft.RoundedRectangleBorder(radius=5),
 
-        on_change=lambda e: print(e.control.selected_index)
+        on_change=lambda e: print(e.control.selected_index),
+
+        label_behavior = ft.NavigationBarLabelBehavior.ONLY_SHOW_SELECTED,
+
+        elevation=4,
+        shadow_color=ft.colors.WHITE,
     )
 
     page.update()
