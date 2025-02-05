@@ -7,7 +7,7 @@ def main(page: ft.Page):
         content=ft.Row(
             controls=[
                 ft.IconButton(icon=ft.icons.MENU, icon_color=ft.colors.WHITE),
-                # ft.Container(expand=True, bgcolor=ft.colors.AMBER),
+                ft.Container(expand=True, bgcolor=ft.colors.AMBER),
                 ft.IconButton(icon=ft.icons.SEARCH, icon_color=ft.colors.WHITE),
                 ft.IconButton(icon=ft.icons.FAVORITE, icon_color=ft.colors.WHITE),
             ],
