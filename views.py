@@ -23,62 +23,63 @@ def main(page: ft.Page):
     def route_change(route):
         page.views.clear()
 
-        page.views.append(
-            ft.View(
-                route="/",
-                appbar=ft.AppBar(
-                    title=ft.Text('Meu App'),
-                    bgcolor=ft.Colors.GREY,
-                ),
-                controls=[
-                    ft.ElevatedButton(
-                        text='Ver loja',
-                        on_click=lambda _: page.go('/loja'),
+        if page.route=='/':
+            page.views.append(
+                ft.View(
+                    route="/",
+                    appbar=ft.AppBar(
+                        title=ft.Text('Meu App'),
+                        bgcolor=ft.Colors.GREY,
                     ),
-                    ft.ListView(
-                        controls=[
-                            ft.Text(
-                                value=f'Item {i}',
-                                size=30
-                            ) for i in range(50)
-                        ]
-                    )
-                ],
-                scroll=ft.ScrollMode.AUTO,
-                auto_scroll=False,
-                bgcolor=ft.Colors.BLACK,
-                drawer=ft.NavigationDrawer(
                     controls=[
-                        ft.NavigationDrawerDestination(
-                            label='Home',
-                            icon=ft.Icons.HOME,
+                        ft.ElevatedButton(
+                            text='Ver loja',
+                            on_click=lambda _: page.go('/loja'),
                         ),
-                        ft.NavigationDrawerDestination(
-                            label='Loja',
-                            icon=ft.Icons.STORE,
-                        ),
-                        ft.NavigationDrawerDestination(
-                            label='Usuário',
-                            icon=ft.Icons.MANAGE_ACCOUNTS,
-                        ),
+                        ft.ListView(
+                            controls=[
+                                ft.Text(
+                                    value=f'Item {i}',
+                                    size=30
+                                ) for i in range(50)
+                            ]
+                        )
                     ],
-                    on_change=change_route,
-                ),
-                end_drawer=ft.NavigationDrawer(
-                    controls=[
-                        ft.NavigationDrawerDestination(label='Configurações'),
-                        ft.NavigationDrawerDestination(label='Dados da Conta'),
-                        ft.NavigationDrawerDestination(label='Sair'),
-                    ]
-                ),
-                floating_action_button=ft.FloatingActionButton(icon=ft.Icons.ADD),
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                vertical_alignment=ft.MainAxisAlignment.START,
-                padding=ft.padding.all(20),
+                    scroll=ft.ScrollMode.AUTO,
+                    auto_scroll=False,
+                    bgcolor=ft.Colors.BLACK,
+                    drawer=ft.NavigationDrawer(
+                        controls=[
+                            ft.NavigationDrawerDestination(
+                                label='Home',
+                                icon=ft.Icons.HOME,
+                            ),
+                            ft.NavigationDrawerDestination(
+                                label='Loja',
+                                icon=ft.Icons.STORE,
+                            ),
+                            ft.NavigationDrawerDestination(
+                                label='Usuário',
+                                icon=ft.Icons.MANAGE_ACCOUNTS,
+                            ),
+                        ],
+                        on_change=change_route,
+                    ),
+                    end_drawer=ft.NavigationDrawer(
+                        controls=[
+                            ft.NavigationDrawerDestination(label='Configurações'),
+                            ft.NavigationDrawerDestination(label='Dados da Conta'),
+                            ft.NavigationDrawerDestination(label='Sair'),
+                        ]
+                    ),
+                    floating_action_button=ft.FloatingActionButton(icon=ft.Icons.ADD),
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    vertical_alignment=ft.MainAxisAlignment.START,
+                    padding=ft.padding.all(20),
+                )
             )
-        )
 
-        if page.route == '/loja':
+        elif page.route == '/loja':
             page.views.append(
                 ft.View(
                     route='/loja',
@@ -100,7 +101,7 @@ def main(page: ft.Page):
                 )
             )
 
-        if page.route == '/usuario':
+        elif page.route == '/usuario':
             page.views.append(
                 ft.View(
                     route='/usuario',
@@ -109,6 +110,24 @@ def main(page: ft.Page):
                         bgcolor=ft.Colors.GREY,
                     ),
                     controls=[
+                        ft.ElevatedButton(
+                            text='Ir para página inicial',
+                            on_click=lambda _: page.go('/')
+                        )
+                    ]
+                )
+            )
+
+        else:
+            page.views.append(
+                ft.View(
+                    route='/404',
+                    appbar=ft.AppBar(
+                        title=ft.Text('404'),
+                        bgcolor=ft.Colors.GREY,
+                    ),
+                    controls=[
+                        ft.Text(value='Página não encontrada'),
                         ft.ElevatedButton(
                             text='Ir para página inicial',
                             on_click=lambda _: page.go('/')
