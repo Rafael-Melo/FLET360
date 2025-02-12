@@ -32,6 +32,45 @@ def main(page: ft.Page):
                     bgcolor=ft.Colors.GREEN_ACCENT,
                     expand=True,
                 ),
+                ft.Divider(
+                    height=2,
+                    color=ft.Colors.WHITE,
+                ),
+            ]
+        )
+    )
+
+    page.add(
+        ft.Row(
+            expand=True,
+            spacing=0,
+            controls=[
+                ft.Container(
+                    bgcolor=ft.Colors.CYAN_100,
+                    expand=True,
+                ),
+                ft.VerticalDivider(),
+                ft.Container(
+                    bgcolor=ft.Colors.BLUE,
+                    expand=True,
+                ),
+                ft.VerticalDivider(
+                    width=1,
+                    color=ft.Colors.WHITE,
+                ),
+                ft.Container(
+                    bgcolor=ft.Colors.DEEP_PURPLE,
+                    expand=True,
+                ),
+                ft.VerticalDivider(
+                    width=50,
+                    thickness=10,
+                    color=ft.Colors.INDIGO,
+                ),
+                ft.Container(
+                    bgcolor=ft.Colors.GREEN_ACCENT,
+                    expand=True,
+                ),
             ]
         )
     )
