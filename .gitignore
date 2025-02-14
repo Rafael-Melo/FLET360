@@ -1,0 +1,13 @@
+teste.py
+assets/
+venv/
+.env
+build/
+dist/
+calculadora.spec
+storage/
+*db
+*.spec
+__pycache__/
+*.pyc
+__MACOSX/
