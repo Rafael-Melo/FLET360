@@ -4,3 +4,8 @@ venv/
 build/
 dist/
 calculadora.spec
+storage/
+*db
+*.spec
+__pycache__
+__MACOSX
