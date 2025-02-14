@@ -25,7 +25,6 @@ def main(page: ft.Page):
         )
     )
 
-
     page.add(layout)
 
     layout.content.controls[0].content.name = ft.icons.PHONE
@@ -60,7 +59,6 @@ def main(page: ft.Page):
             ]
         )
     )
-
 
     page.add(layout)
 
