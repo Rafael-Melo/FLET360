@@ -8,8 +8,16 @@ def main(page: ft.Page):
     img = ft.Image(src='images/barra.png')
     page.add(img)
 
+    def chart_events(e: ft.BarChartEvent):
+        if e.group_index is not None:
+            chart.bar_groups[e.group_index].bars_space = 20
+            chart.bar_groups[e.group_index].bar_rods[e.rod_index].color = ft.Colors.GREY
+            chart.update()
+
+
     chart = ft.BarChart(
         expand=True,
+        animate=ft.Animation(duration=1000, curve=ft.AnimationCurve.ELASTIC_IN_OUT),
         bar_groups=[
             ft.BarChartGroup(
                 x=0,
@@ -34,7 +42,7 @@ def main(page: ft.Page):
                     ),
                 ],
                 bars_space=20,
-                group_vertically=True, # Empilha as barra
+                group_vertically=False, # Empilha as barra
             ),
             ft.BarChartGroup(
                 x=1,
@@ -102,6 +110,56 @@ def main(page: ft.Page):
         border=ft.border.all(width=5, color=ft.Colors.GREY_400),
         interactive=True,
         tooltip_bgcolor=ft.Colors.BLACK,
+        horizontal_grid_lines=ft.ChartGridLines(
+            interval=20,
+            color=ft.Colors.GREEN_300,
+            width=3,
+            dash_pattern=[3, 20]
+        ),
+        vertical_grid_lines=ft.ChartGridLines(
+            interval=0.1,
+            color=ft.Colors.GREY_300,
+            width=1,
+        ),
+        left_axis=ft.ChartAxis(
+            labels_size=40,
+            show_labels=True,
+            labels_interval=30,
+            title=ft.Text(value='Preço das Frutas (R$)'),
+            title_size=100,
+        ),
+        top_axis=ft.ChartAxis(
+            show_labels=False,
+            title=ft.Text(value='Preço Médio das Frutas em São Paulo', size=30),
+            title_size=100,
+        ),
+        right_axis=ft.ChartAxis(
+            show_labels=False,
+        ),
+        bottom_axis=ft.ChartAxis(
+            labels=[
+                ft.ChartAxisLabel(
+                    value=0,
+                    label=ft.Container(ft.Text('Maçã'), padding=10),
+                ),
+                ft.ChartAxisLabel(
+                    value=1,
+                    label=ft.Container(ft.Text('Jabuticaba'), padding=10),
+                ),
+                ft.ChartAxisLabel(
+                    value=2,
+                    label=ft.Container(ft.Text('Morango'), padding=10),
+                ),
+                ft.ChartAxisLabel(
+                    value=3,
+                    label=ft.Container(ft.Text('Laranja'), padding=10),
+                ),
+            ],
+            labels_size=40,
+        ),
+        min_y=0,
+        max_y=120,
+        on_chart_event=chart_events,
     )
 
     page.add(chart)
