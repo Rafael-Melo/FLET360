@@ -1,7 +1,10 @@
 import flet as ft
 
 def main(page: ft.Page):
+    page.padding = 0
+
     def list_tasks():
+        page.bgcolor = ft.LinearGradient(colors=[ft.Colors.INDIGO_900, ft.Colors.DEEP_PURPLE])
         items = page.client_storage.get('tasks')
 
         if not items:
@@ -38,11 +41,29 @@ def main(page: ft.Page):
         e.control.update()
         list_tasks()
 
-    tf = ft.TextField(on_submit=save_localy)
+    tx = ft.Text(value="ToDo", weight=ft.FontWeight.BOLD, size=30)
+    tf = ft.TextField(hint_text='Digite uma tarefa', on_submit=save_localy)
     lv = ft.ListView()
 
-    page.add(tf, lv)
+    layout = ft.Container(
+        content=ft.Column(
+            controls=[tx, tf,lv,],
+            alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        ),
+        expand=True,
+            gradient=ft.LinearGradient(
+                colors=[ft.Colors.INDIGO_900, ft.Colors.DEEP_PURPLE],
+                begin=ft.alignment.top_left,
+                end=ft.alignment.bottom_right,
+            ),
+        alignment=ft.alignment.center,
+    )
+
+    page.add(layout)
     list_tasks()
+
+    page.update()
 
 
 if __name__ == '__main__':
