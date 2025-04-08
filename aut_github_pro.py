@@ -67,16 +67,16 @@ def main(page: ft.Page):
             )
 
             # hover simples — muda cor de fundo
-            def on_hover(e, c=container):
+            def on_hover(e, c, name, desc):
                 hover_on = e.data == "true"
                 c.bgcolor = ft.colors.DEEP_PURPLE if hover_on else ft.colors.SURFACE_VARIANT
-                repo_name.color = ft.colors.BLACK if hover_on else ft.colors.ON_SURFACE
-                repo_desc.color = ft.colors.BLACK if hover_on else ft.colors.ON_SURFACE
-                repo_name.update()
-                repo_desc.update()
+                name.color = ft.colors.BLACK if hover_on else ft.colors.ON_SURFACE
+                desc.color = ft.colors.BLACK if hover_on else ft.colors.ON_SURFACE
+                name.update()
+                desc.update()
                 c.update()
 
-            container.on_hover = on_hover
+            container.on_hover = lambda e, c=container, name=repo_name, desc=repo_desc: on_hover(e, c, name, desc)
 
             repo_cards.append(ft.Card(content=container, elevation=2))
 
@@ -149,4 +149,4 @@ if __name__ == "__main__":
     ft.app(target=main)
 
 # Para rodar:
-# flet run ".\aut_github copy.py" -w --port 5354
+# flet run ".\aut_github_pro.py" -w --port 5354
