@@ -11,7 +11,11 @@ def main(page: ft.Page):
         e.control.content.color = ft.colors.BLACK
         e.control.bgcolor = ft.colors.GREY_300
         e.control.update()
-    
+
+    def show_image_detail(e):
+        img_src = e.control.src
+        print(f'Imagem clicada: {img_src}')
+        # Aqui você pode abrir um modal, navegar, mostrar zoom, etc.
 
     header = ft.Container(
         padding=ft.padding.all(20),
@@ -21,11 +25,12 @@ def main(page: ft.Page):
                 ft.Container(
                     col={'xs':12, 'sm':4},
                     padding=40,
-                    bgcolor=ft.colors.WHITE,
+                    bgcolor=ft.colors.BLACK,
                     shape=ft.BoxShape.CIRCLE,
+                    shadow=ft.BoxShadow(blur_radius=10, color=ft.Colors.LIGHT_BLUE),
                     height=200,
                     content=ft.Image(
-                        src='images/Logo.png',
+                        src='images/Avatar.png',
                     ),
                 ),
                 ft.Container(
@@ -39,7 +44,7 @@ def main(page: ft.Page):
                                 col=11,
                                 controls=[
                                     ft.Text(
-                                        value='adventuredeveloper',
+                                        value='avatardeveloper',
                                         color=ft.colors.BLUE,
                                         size=24,
                                     ),
@@ -144,7 +149,7 @@ def main(page: ft.Page):
                             ),
                             ft.Text(
                                 col=12,
-                                value='Adventure Developer',
+                                value='Avatar Developer',
                                 color=ft.colors.WHITE,
                                 weight=ft.FontWeight.BOLD,
                             ),
@@ -153,11 +158,11 @@ def main(page: ft.Page):
                                 color=ft.colors.WHITE,
                                 spans=[
                                     ft.TextSpan(text='Teaching programming from the ground up! 🤯\n'),
-                                    ft.TextSpan(text='Follow on YouTube: Adventure Developer ▶️\n'),
+                                    ft.TextSpan(text='Follow on YouTube: Avatar Developer ▶️\n'),
                                     ft.TextSpan(text='Free courses in Python, SQL, Django, and more in the link  👇👇👇\n'),
                                     ft.TextSpan(
-                                        text='🔗 linktr.ee/adventuredeveloper',
-                                        url='https://linktr.ee/adventuredeveloper',
+                                        text='🔗 linktr.ee/avatardeveloper',
+                                        url='https://linktr.ee/avatardeveloper',
                                         style=ft.TextStyle(
                                             color=ft.colors.BLUE,
                                         )
@@ -216,9 +221,10 @@ def main(page: ft.Page):
         run_spacing=5,
         controls=[
             ft.Image(
-                src=f'https://picsum.photos/150/150?{num}',
+                src=f'images/Nostagram{num}.png',
                 fit=ft.ImageFit.COVER,
-            ) for num in range(100)
+                on_click=show_image_detail,
+            ) for num in range(12)
         ]
     )
 
@@ -268,4 +274,4 @@ def main(page: ft.Page):
 
 
 if __name__ == '__main__':
-    ft.app(target=main, assets_dir='assets')
+    ft.app(target=main, assets_dir='../assets')
