@@ -1,6 +1,6 @@
 import flet as ft
 
-def main(page: ft.Page):
+def main_view(page: ft.Page):
     page.bgcolor = ft.colors.BLACK
     page.scroll = ft.ScrollMode.HIDDEN
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
@@ -13,9 +13,9 @@ def main(page: ft.Page):
         e.control.update()
 
     def show_image_detail(e):
-        img_src = e.control.src
-        print(f'Imagem clicada: {img_src}')
-        # Aqui você pode abrir um modal, navegar, mostrar zoom, etc.
+        img_num = e.control.data
+        print(f'Imagem clicada: {img_num}')
+        e.page.go(f"/detail/{img_num}")
 
     header = ft.Container(
         padding=ft.padding.all(20),
@@ -220,10 +220,13 @@ def main(page: ft.Page):
         spacing=5,
         run_spacing=5,
         controls=[
-            ft.Image(
-                src=f'images/Nostagram{num}.png',
-                fit=ft.ImageFit.COVER,
+            ft.Container(
+                data=num,
                 on_click=show_image_detail,
+                content=ft.Image(
+                    src=f'images/Nostagram{num}.png',
+                    fit=ft.ImageFit.COVER,
+                )
             ) for num in range(12)
         ]
     )
@@ -255,23 +258,22 @@ def main(page: ft.Page):
         ]
     )
 
-    layout = ft.Container(
-        width=900,
-        content=ft.Column(
-            spacing=0,
-            controls=[
-                header,
-                stories,
-                ft.Divider(color=ft.colors.GREY),
-                posts,
-            ]
-        )
+    layout = ft.View(
+        route="/",
+        controls=[
+            ft.Container(
+                width=900,
+                content=ft.Column(
+                    spacing=0,
+                    controls=[
+                        header,
+                        stories,
+                        ft.Divider(color=ft.colors.GREY),
+                        posts,
+                    ]
+                )
+            )
+        ]
     )
 
-    page.add(
-        layout,
-    )
-
-
-if __name__ == '__main__':
-    ft.app(target=main, assets_dir='../assets')
+    return layout
