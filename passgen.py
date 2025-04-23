@@ -14,9 +14,22 @@ def main(page: ft.Page):
     def generate_password(e):
         ...
 
-    def toggle_option(e):
-        ...
+    options = {}
+    generate_button = ft.Ref[ft.Container]()
 
+    def toggle_option(e):
+        nonlocal options
+        options.update({e.control.data: e.control.value})
+
+        if any(options.values()):
+            generate_button.current.disabled = False
+            generate_button.current.opacity = 1
+        else:
+            generate_button.current.disabled = True
+            generate_button.current.opacity = 0.3
+        
+        generate_button.current.update()
+        
     layout = ft.Container(
         expand=True,
         padding=ft.padding.only(top=40, left=20, right=20, bottom=20),
@@ -126,6 +139,7 @@ def main(page: ft.Page):
                     toggle_inputs=True,
                 ),
                 ft.Container(
+                    ref=generate_button,
                     gradient=ft.LinearGradient(
                         colors=[ft.Colors.INDIGO_900, ft.Colors.INDIGO]
                     ),
