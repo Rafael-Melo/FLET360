@@ -1,4 +1,6 @@
 import flet as ft
+import string
+import random
 
 def main(page: ft.Page):
     page.padding = 0
@@ -11,11 +13,40 @@ def main(page: ft.Page):
         )
     )
 
-    def generate_password(e):
-        ...
-
     options = {}
     generate_button = ft.Ref[ft.Container]()
+    txt_password = ft.Ref[ft.Text]()
+    characteres_count = ft.Ref[ft.Slider]()
+    btn_clipboard = ft.Ref[ft.IconButton]()
+
+    def copy_to_clipboard(e):
+        pwd = txt_password.current.value
+
+        if pwd:
+            page.set_clipboard(pwd)
+            btn_clipboard.current.selected = True
+            btn_clipboard.current.update()
+
+    def generate_password(e):
+        pwd = ''
+
+        if options.get('uppercase'):
+            pwd += string.ascii_uppercase
+        if options.get('lowercase'):
+            pwd += string.ascii_lowercase
+        if options.get('digits'):
+            pwd += string.digits     
+        if options.get('punctuation'):
+            pwd += string.punctuation
+
+        count = int(characteres_count.current.value)
+        password = random.choices(pwd, k=count)
+        
+        txt_password.current.value = ''.join(password)
+        txt_password.current.update()
+
+        btn_clipboard.current.selected = False
+        btn_clipboard.current.update()
 
     def toggle_option(e):
         nonlocal options
@@ -56,16 +87,19 @@ def main(page: ft.Page):
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                         controls=[
                             ft.Text(
+                                ref=txt_password,
                                 selectable=True,
                                 size=20,
                                 height=40,
                             ),
                             ft.IconButton(
+                                ref = btn_clipboard,
                                 icon=ft.Icons.COPY,
                                 icon_color=ft.Colors.WHITE30,
                                 selected_icon=ft.Icons.CHECK,
                                 selected_icon_color=ft.Colors.INDIGO,
                                 selected=False,
+                                on_click=copy_to_clipboard,
                             )
                         ]
                     )
@@ -79,6 +113,7 @@ def main(page: ft.Page):
                     border_radius=ft.border_radius.all(5),
                     padding=ft.padding.all(10),
                     content=ft.Slider(
+                        ref = characteres_count,
                         value=10,
                         min=4,
                         max=20,
